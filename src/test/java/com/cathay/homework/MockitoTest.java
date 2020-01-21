@@ -1,34 +1,19 @@
 package com.cathay.homework;
 
-import javafx.application.Application;
-import sun.tools.jconsole.inspector.Utils;
-
 import java.util.Optional;
 
 import org.apache.logging.log4j.util.Strings;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import com.cathay.homework.entity.Department;
 import com.cathay.homework.entity.Employee;
 import com.cathay.homework.model.DepartmentRequest;
-import com.cathay.homework.model.EmployeeDept;
 import com.cathay.homework.model.EmployeeRequest;
 import com.cathay.homework.repository.DepartmentRepository;
 import com.cathay.homework.repository.EmployeeRepository;
@@ -64,7 +49,8 @@ public class MockitoTest {
         Employee mockEmployee = spy(employee);
         mockEmployee.setName("test");
 
-        Department department = new Department(Strings.EMPTY);
+        Department department = new Department();
+        department.setDepartmentName(Strings.EMPTY);
         Department mockDepartment = spy(department);
         when(departmentRepository.findById(1L)).thenReturn(Optional.of(mockDepartment));
 
@@ -99,8 +85,9 @@ public class MockitoTest {
 
     @Test
     public void addDepartment() throws Exception {
-        Department department = new Department("test dept");
+        Department department = new Department();
         Department spyDepartment = spy(department);
+        spyDepartment.setDepartmentName("test dept");
 
         when(departmentRepository.findByDepartmentName("test dept")).thenReturn(spyDepartment);
 
@@ -119,8 +106,9 @@ public class MockitoTest {
 
         when(departmentRepository.findById(1L)).thenReturn(Optional.of(mockDepartment));
 
-        Department newExpectDept = new Department("New Test Dept");
+        Department newExpectDept = new Department();
         newExpectDept.setDepartmentId(1L);
+        newExpectDept.setDepartmentName("New Test Dept");
 
         departmentService.updateDepartment(1L, spyRequest);
         when(departmentRepository.findByDepartmentName(newExpectDept.getDepartmentName())).thenReturn(newExpectDept);

@@ -17,10 +17,6 @@ public class Department {
     @Column(nullable = false)
     private String departmentName;
 
-    public Department(String departmentName) {
-        this.departmentName = departmentName;
-    }
-
     public Long getDepartmentId() {
         return departmentId;
     }

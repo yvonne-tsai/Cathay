@@ -24,7 +24,8 @@ public class DepartmentController {
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity createDepartment(@RequestBody DepartmentRequest departmentRequest) {
         try {
-            Department department = new Department(departmentRequest.getDepartmentName());
+            Department department = new Department();
+            department.setDepartmentName(departmentRequest.getDepartmentName());
             departmentService.createDepartment(department);
             return new ResponseEntity(HttpStatus.OK);
         } catch(Exception e) {
